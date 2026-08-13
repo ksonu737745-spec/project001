@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Details</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f4f6fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
+
+.card{
+    width:100%;
+    max-width:430px;
+    background:#fff;
+    border-radius:18px;
+    padding:25px 20px;
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+h2{
+    text-align:center;
+    color:#222;
+    margin-bottom:8px;
+}
+
+.message{
+    text-align:center;
+    color:#666;
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:22px;
+}
+
+.details{
+    background:#f8f9fc;
+    border-radius:12px;
+    padding:15px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid #e5e5e5;
+}
+
+.row:last-child{
+    border-bottom:none;
+}
+
+.label{
+    color:#666;
+    font-size:15px;
+}
+
+.value{
+    color:#111;
+    font-size:15px;
+    font-weight:bold;
+    text-align:right;
+}
+
+.amount{
+    color:#2e7d32;
+    font-size:17px;
+}
+
+.success{
+    color:#2e7d32;
+}
+
+.pending{
+    color:#ff9800;
+}
+
+.failed{
+    color:#d32f2f;
+}
+
+.note{
+    margin-top:20px;
+    background:#eef5ff;
+    color:#0d47a1;
+    padding:14px;
+    border-radius:10px;
+    font-size:14px;
+    line-height:1.6;
+}
+
+button{
+    width:100%;
+    margin-top:22px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#1565c0;
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0d47a1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2 id="title">Order Received Successfully</h2>
+
+    <p class="message" id="message">
+        Thank you for placing your order. Your order has been received successfully and is currently under verification. Please keep your Order ID for future reference.
+    </p>
+
+    <div class="details">
+
+        <div class="row">
+            <span class="label">Order ID</span>
+            <span class="value" id="orderId">ORD-20260804001</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Product Name</span>
+            <span class="value" id="product">Premium Membership</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Order Amount</span>
+            <span class="value amount" id="amount">₹999</span>
+        </div>
+              
+        <div class="row">
+            <span class="label"> Advance Payment Status</span>
+            <span class="value success" id="payment">Paid</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Order Status</span>
+            <span class="value pending" id="status">Pending Verification</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Customer Name</span>
+            <span class="value" id="customer">Rahul Kumar</span>
+        </div>
+
+        <div class="row">
+            <span class="label">Order Date</span>
+            <span class="value" id="date">04 Aug 2026</span>
+        </div>
+
+    </div>
+
+    <div class="note" id="note">
+        Your advance payment has been received successfully. Our team is currently verifying your order. After successful verification, your order will be activated automatically. If you need any assistance, please contact support with your Order ID.
+    </div>
+
+    <button onclick="history.back()">Back</button>
+
+</div>
+
+<script>
+
+
+<script>
+
+const data = {
+
+    orderId: document.getElementById("orderId").innerText,
+
+    productName: document.getElementById("product").innerText,
+
+    orderAmount: Number(
+        document.getElementById("amount").innerText.replace("₹", "")
+    ),
+
+    advancePaymentStatus: document.getElementById("payment").innerText,
+
+    orderStatus: document.getElementById("status").innerText,
+
+    customerName: document.getElementById("customer").innerText,
+
+    orderDate: document.getElementById("date").innerText
+
+};
+
+fetch("/order", {
+
+    method: "POST",
+
+    headers: {
+        "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify(data)
+
+})
+.then(res => res.json())
+.then(result => {
+
+    console.log(result);
+    alert("Order Saved Successfully");
+
+})
+.catch(err => console.log(err));
+
+</script>
+
+// Example:
+// document.getElementById("orderId").innerText = data.orderId;
+// document.getElementById("product").innerText = data.product;
+// document.getElementById("amount").innerText = data.amount;
+// document.getElementById("advanceAmount").innerText = data.advanceAmount;
+// document.getElementById("advanceStatus").innerText = data.advanceStatus;
+// document.getElementById("payment").innerText = data.payment;
+// document.getElementById("status").innerText = data.status;
+// document.getElementById("customer").innerText = data.customer;
+// document.getElementById("date").innerText = data.date;
+// document.getElementById("message").innerText = data.message;
+// document.getElementById("note").innerText = data.note;
+
+</script>
+
+</body>
+</html>

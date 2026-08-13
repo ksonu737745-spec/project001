@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Panel</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#172033;
+}
+
+.header{
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:white;
+    padding:20px;
+    box-shadow:0 4px 15px #0002;
+}
+
+.header h1{
+    font-size:23px;
+}
+
+.header p{
+    margin-top:5px;
+    font-size:13px;
+    opacity:.9;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:16px;
+}
+
+/* TOTAL CARDS */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+}
+
+.stat{
+    background:white;
+    padding:18px;
+    border-radius:15px;
+    border-left:5px solid #2563eb;
+    box-shadow:0 5px 18px #0000000d;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.stat:hover{
+    transform:translateY(-2px);
+}
+
+.stat.active{
+    background:#eff6ff;
+    border-left-color:#1d4ed8;
+}
+
+.stat i{
+    color:#2563eb;
+    font-size:23px;
+}
+
+.stat h2{
+    font-size:28px;
+    margin-top:8px;
+}
+
+.stat p{
+    color:#64748b;
+    font-size:13px;
+    margin-top:3px;
+}
+
+/* SEARCH */
+
+.panel{
+    background:white;
+    padding:14px;
+    border-radius:14px;
+    margin-top:18px;
+    box-shadow:0 5px 18px #0000000d;
+}
+
+.search{
+    width:100%;
+    padding:12px;
+    border:1px solid #d9e0ea;
+    border-radius:9px;
+    outline:none;
+}
+
+.search:focus{
+    border-color:#2563eb;
+}
+
+/* TITLE */
+
+.title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:20px 0 12px;
+}
+
+.title h2{
+    font-size:18px;
+}
+
+.title span{
+    color:#64748b;
+    font-size:12px;
+}
+
+/* CARDS */
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:14px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:16px;
+    border-left:4px solid #2563eb;
+    box-shadow:0 5px 18px #0000000d;
+}
+
+.card-head{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:flex-start;
+}
+
+.card-head h3{
+    font-size:16px;
+    word-break:break-word;
+}
+
+.badge{
+    background:#eaf2ff;
+    color:#2563eb;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:11px;
+    white-space:nowrap;
+}
+
+.data{
+    margin-top:12px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:8px 0;
+    border-bottom:1px solid #edf0f4;
+    font-size:13px;
+}
+
+.row:last-child{
+    border-bottom:0;
+}
+
+.key{
+    color:#64748b;
+    min-width:100px;
+}
+
+.value{
+    text-align:right;
+    max-width:65%;
+    word-break:break-word;
+}
+
+.actions{
+    display:flex;
+    gap:8px;
+    margin-top:14px;
+}
+
+.actions button{
+    flex:1;
+    border:0;
+    padding:10px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.update{
+    background:#eaf2ff;
+    color:#2563eb;
+}
+
+.delete{
+    background:#feecec;
+    color:#dc2626;
+}
+
+/* EMPTY */
+
+.empty{
+    background:white;
+    padding:35px;
+    border-radius:14px;
+    text-align:center;
+    color:#64748b;
+}
+
+.empty i{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.loading{
+    text-align:center;
+    padding:30px;
+    color:#64748b;
+}
+
+/* MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0008;
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:520px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:16px;
+    padding:20px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.close{
+    border:0;
+    width:34px;
+    height:34px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.field{
+    margin-bottom:12px;
+}
+
+.field label{
+    display:block;
+    color:#64748b;
+    font-size:12px;
+    margin-bottom:5px;
+}
+
+.field input,
+.field textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #d9e0ea;
+    border-radius:8px;
+    outline:none;
+}
+
+.field textarea{
+    min-height:80px;
+}
+
+.save{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:9px;
+    background:#2563eb;
+    color:white;
+    cursor:pointer;
+}
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <h1>
+        <i class="fa-solid fa-user-shield"></i>
+        Admin Panel
+    </h1>
+
+    <p>
+        Users • Orders • Customer Orders
+    </p>
+
+</header>
+
+
+<main class="container">
+
+    <!-- TOTAL -->
+
+    <div class="stats">
+
+        <div
+            id="userStat"
+            class="stat active"
+            onclick="showSection('users')">
+
+            <i class="fa-solid fa-users"></i>
+
+            <h2 id="userCount">0</h2>
+
+            <p>Total Users</p>
+
+        </div>
+
+
+        <div
+            id="orderStat"
+            class="stat"
+            onclick="showSection('orders')">
+
+            <i class="fa-solid fa-box"></i>
+
+            <h2 id="orderCount">0</h2>
+
+            <p>Total Orders</p>
+
+        </div>
+
+
+        <div
+            id="customerStat"
+            class="stat"
+            onclick="showSection('customerOrders')">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            <h2 id="customerOrderCount">0</h2>
+
+            <p>Total Customer Orders</p>
+
+        </div>
+
+    </div>
+
+
+    <!-- CURRENT SECTION -->
+
+    <div class="title">
+
+        <h2 id="sectionTitle">
+            All Users
+        </h2>
+
+        <span id="recordCount">
+            0 Records
+        </span>
+
+    </div>
+
+
+    <div class="panel">
+
+        <input
+            id="search"
+            class="search"
+            placeholder="Search name, ID, email, order ID..."
+            oninput="renderRecords()">
+
+    </div>
+
+
+    <!-- RECORDS -->
+
+    <div
+        id="records"
+        class="cards"
+        style="margin-top:14px;">
+    </div>
+
+
+    <!-- RECENT -->
+<!--
+    <div class="title">
+
+        <h2>
+            <i class="fa-solid fa-clock"></i>
+            Recently Added
+        </h2>
+
+    </div>
+
+    <div
+        id="recent"
+        class="cards">
+    </div>
+-->
+</main>
+
+
+<!-- UPDATE MODAL -->
+
+<div id="modal" class="modal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2>
+                <i class="fa-solid fa-pen"></i>
+                Update
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+        <div id="editForm"></div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+let users = [];
+let orders = [];
+let customerOrders = [];
+
+let currentSection = "users";
+
+let selectedId = "";
+let selectedType = "";
+
+
+/* ==============================
+   LOAD DATA
+============================== */
+
+async function loadData(){
+
+    document.getElementById("records").innerHTML =
+        `<div class="loading">Loading...</div>`;
+
+    try{
+
+        const [
+            usersData,
+            ordersData,
+            customerData
+        ] = await Promise.all([
+
+            fetch("/users").then(r => r.json()),
+
+            fetch("/total-orders").then(r => r.json()),
+
+            fetch("/customer-orders").then(r => r.json())
+
+        ]);
+
+
+        users =
+            Array.isArray(usersData)
+            ? usersData
+            : [];
+
+        orders =
+            Array.isArray(ordersData)
+            ? ordersData
+            : [];
+
+        customerOrders =
+            Array.isArray(customerData)
+            ? customerData
+            : [];
+
+
+        updateCounts();
+
+        renderRecords();
+
+      renderRecent();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        document.getElementById("records").innerHTML =
+            `<div class="empty">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <p>Data load nahi hua.</p>
+            </div>`;
+
+    }
+
+}
+
+
+/* ==============================
+   COUNTS
+============================== */
+
+function updateCounts(){
+
+    document.getElementById("userCount")
+        .textContent = users.length;
+
+    document.getElementById("orderCount")
+        .textContent = orders.length;
+
+    document.getElementById("customerOrderCount")
+        .textContent = customerOrders.length;
+
+}
+
+
+/* ==============================
+   SHOW SECTION
+============================== */
+
+function showSection(type){
+
+    currentSection = type;
+
+    document
+        .querySelectorAll(".stat")
+        .forEach(card =>
+            card.classList.remove("active")
+        );
+
+
+    if(type === "users"){
+
+        document
+            .getElementById("userStat")
+            .classList.add("active");
+
+        document.getElementById("sectionTitle")
+            .textContent = "All Users";
+
+    }
+
+
+    if(type === "orders"){
+
+        document
+            .getElementById("orderStat")
+            .classList.add("active");
+
+        document.getElementById("sectionTitle")
+            .textContent = "All Orders";
+
+    }
+
+
+    if(type === "customerOrders"){
+
+        document
+            .getElementById("customerStat")
+            .classList.add("active");
+
+        document.getElementById("sectionTitle")
+            .textContent = "All Customer Orders";
+
+    }
+
+
+    document.getElementById("search").value = "";
+
+    renderRecords();
+
+}
+
+
+/* ==============================
+   CURRENT DATA
+============================== */
+
+function getData(){
+
+    if(currentSection === "users")
+        return users;
+
+    if(currentSection === "orders")
+        return orders;
+
+    if(currentSection === "customerOrders")
+        return customerOrders;
+
+    return [];
+
+}
+
+
+/* ==============================
+   RENDER RECORDS
+============================== */
+
+function renderRecords(){
+
+    let data = getData();
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    if(search){
+
+        data = data.filter(item =>
+            JSON.stringify(item)
+                .toLowerCase()
+                .includes(search)
+        );
+
+    }
+
+
+    document.getElementById("recordCount")
+        .textContent =
+        `${data.length} Records`;
+
+
+    if(!data.length){
+
+        document.getElementById("records").innerHTML =
+            `<div class="empty">
+
+                <i class="fa-solid fa-folder-open"></i>
+
+                <p>No record found</p>
+
+            </div>`;
+
+        return;
+
+    }
+
+
+    document.getElementById("records").innerHTML =
+        data
+        .map(item =>
+            createCard(item,currentSection)
+        )
+        .join("");
+
+}
+
+
+/* ==============================
+   CARD
+============================== */
+
+function createCard(item,type){
+
+    const id = getId(item,type);
+
+
+    let title = "Record";
+
+
+    if(type === "users"){
+
+        title =
+            item.name ||
+            item.userId ||
+            "User";
+
+    }
+    else{
+
+        title =
+            item.orderId ||
+            item.productName ||
+            item.productId ||
+            "Order";
+
+    }
+
+
+    let rows = "";
+
+
+    Object.entries(item).forEach(
+        ([key,value]) => {
+
+            /*
+                Password/OTP frontend par nahi
+            */
+
+            if(
+                key === "password" ||
+                key === "genotp"
+            ){
+
+                return;
+
+            }
+
+
+            let display = value;
+
+
+            if(
+                value !== null &&
+                typeof value === "object"
+            ){
+
+                display =
+                    JSON.stringify(value);
+
+            }
+
+
+            rows += `
+
+                <div class="row">
+
+                    <span class="key">
+                        ${escapeHTML(key)}
+                    </span>
+
+                    <span class="value">
+                        ${escapeHTML(
+                            display ?? "-"
+                        )}
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    return `
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <h3>
+                    ${escapeHTML(title)}
+                </h3>
+
+                <span class="badge">
+                    ${type}
+                </span>
+
+            </div>
+
+
+            <div class="data">
+
+                ${rows}
+
+            </div>
+
+
+            <div class="actions">
+
+                <button
+                    class="update"
+                    onclick='openUpdate(
+                        ${JSON.stringify(item)},
+                        "${type}"
+                    )'>
+
+                    <i class="fa-solid fa-pen"></i>
+                    Update
+
+                </button>
+
+
+                <button
+                    class="delete"
+                    onclick="deleteRecord(
+                        '${escapeAttr(id)}',
+                        '${type}'
+                    )">
+
+                    <i class="fa-solid fa-trash"></i>
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==============================
+   GET ID
+============================== */
+
+function getId(item,type){
+
+    if(type === "users"){
+
+        return item.userId || item._id;
+
+    }
+
+
+    if(type === "orders"){
+
+        return item.orderId || item._id;
+
+    }
+
+
+    if(type === "customerOrders"){
+
+        return item.orderId || item._id;
+
+    }
+
+
+    return item._id;
+
+}
+
+
+/* ==============================
+   RECENT RECORDS
+============================== */
+
+function renderRecent(){
+
+    const all = [
+
+        ...users.map(x => ({
+            item:x,
+            type:"users"
+        })),
+
+        ...orders.map(x => ({
+            item:x,
+            type:"orders"
+        })),
+
+        ...customerOrders.map(x => ({
+            item:x,
+            type:"customerOrders"
+        }))
+
+    ];
+
+
+    /*
+       createdAt hai to usse sort.
+       Nahi hai to MongoDB _id.
+    */
+
+    all.sort((a,b) => {
+
+        const dateA =
+            a.item.createdAt
+            ? new Date(a.item.createdAt).getTime()
+            : 0;
+
+        const dateB =
+            b.item.createdAt
+            ? new Date(b.item.createdAt).getTime()
+            : 0;
+
+
+        if(dateA || dateB){
+
+            return dateB - dateA;
+
+        }
+
+
+        return String(
+            b.item._id || ""
+        ).localeCompare(
+            String(a.item._id || "")
+        );
+
+    });
+
+
+    const latest =
+        all.slice(0,6);
+
+
+    if(!latest.length){
+
+        document.getElementById("recent").innerHTML =
+            `<div class="empty">
+                No records
+            </div>`;
+
+        return;
+
+    }
+
+
+    document.getElementById("recent").innerHTML =
+        latest.map(x => {
+
+            const id =
+                getId(
+                    x.item,
+                    x.type
+                );
+
+
+            const title =
+                x.item.name ||
+                x.item.orderId ||
+                x.item.productName ||
+                "New Record";
+
+
+            return `
+
+                <div class="card">
+
+                    <div class="card-head">
+
+                        <h3>
+                            ${escapeHTML(title)}
+                        </h3>
+
+                        <span class="badge">
+                            ${x.type}
+                        </span>
+
+                    </div>
+
+
+                    <div class="data">
+
+                        <div class="row">
+
+                            <span class="key">
+                                ID
+                            </span>
+
+                            <span class="value">
+                                ${escapeHTML(id)}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+}
+
+
+/* ==============================
+   OPEN UPDATE
+============================== */
+
+function openUpdate(item,type){
+
+    selectedType = type;
+
+    selectedId =
+        getId(item,type);
+
+
+    let html = "";
+
+
+    Object.entries(item).forEach(
+        ([key,value]) => {
+
+            /*
+                System fields ko edit nahi
+            */
+
+            if(
+                key === "_id" ||
+                key === "__v" ||
+                key === "password" ||
+                key === "genotp"
+            ){
+
+                return;
+
+            }
+
+
+            if(
+                value !== null &&
+                typeof value === "object"
+            ){
+
+                html += `
+
+                    <div class="field">
+
+                        <label>
+                            ${escapeHTML(key)}
+                        </label>
+
+                        <textarea
+                            data-key="${escapeAttr(key)}"
+                            data-json="true"
+                        >${escapeHTML(
+                            JSON.stringify(
+                                value,
+                                null,
+                                2
+                            )
+                        )}</textarea>
+
+                    </div>
+
+                `;
+
+            }
+            else{
+
+                html += `
+
+                    <div class="field">
+
+                        <label>
+                            ${escapeHTML(key)}
+                        </label>
+
+                        <input
+                            data-key="${escapeAttr(key)}"
+                            value="${escapeAttr(
+                                value ?? ""
+                            )}"
+                            ${
+                                key === "userId" ||
+                                key === "orderId"
+                                ? "readonly"
+                                : ""
+                            }
+                        >
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+    );
+
+
+    html += `
+
+        <button
+            class="save"
+            onclick="saveUpdate()">
+
+            <i class="fa-solid fa-check"></i>
+            Save Changes
+
+        </button>
+
+    `;
+
+
+    document.getElementById("editForm")
+        .innerHTML = html;
+
+
+    document.getElementById("modal")
+        .classList.add("show");
+
+}
+
+
+/* ==============================
+   SAVE UPDATE
+============================== */
+
+async function saveUpdate(){
+
+    const elements =
+        document.querySelectorAll(
+            "#editForm input,#editForm textarea"
+        );
+
+
+    const body = {};
+
+
+    for(const element of elements){
+
+        const key =
+            element.dataset.key;
+
+
+        if(
+            key === "userId" ||
+            key === "orderId"
+        ){
+
+            continue;
+
+        }
+
+
+        let value =
+            element.value;
+
+
+        if(element.dataset.json === "true"){
+
+            try{
+
+                value =
+                    JSON.parse(value);
+
+            }
+            catch{
+
+                alert(
+                    key +
+                    " ka JSON galat hai"
+                );
+
+                return;
+
+            }
+
+        }
+        else if(
+            value !== "" &&
+            !isNaN(value)
+        ){
+
+            value =
+                Number(value);
+
+        }
+
+
+        body[key] = value;
+
+    }
+
+
+    let url = "";
+
+
+    if(selectedType === "users"){
+
+        url =
+            "/user/" +
+            encodeURIComponent(
+                selectedId
+            );
+
+    }
+
+
+    if(selectedType === "orders"){
+
+        url =
+            "/order/" +
+            encodeURIComponent(
+                selectedId
+            );
+
+    }
+
+
+    if(selectedType === "customerOrders"){
+
+        url =
+            "/customer-order/" +
+            encodeURIComponent(
+                selectedId
+            );
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(url,{
+
+                method:"PUT",
+
+                headers:{
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body:
+                    JSON.stringify(body)
+
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if(!response.ok){
+
+            throw new Error(
+                result.message ||
+                "Update failed"
+            );
+
+        }
+
+
+        alert("Update successful");
+
+        closeModal();
+
+        await loadData();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            error.message ||
+            "Update failed"
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   DELETE
+============================== */
+
+async function deleteRecord(id,type){
+
+    if(
+        !confirm(
+            "Kya aap is record ko delete karna chahte hain?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    let url = "";
+
+
+    if(type === "users"){
+
+        url =
+            "/user/" +
+            encodeURIComponent(id);
+
+    }
+
+
+    if(type === "orders"){
+
+        url =
+            "/order/" +
+            encodeURIComponent(id);
+
+    }
+
+
+    if(type === "customerOrders"){
+
+        url =
+            "/customer-order/" +
+            encodeURIComponent(id);
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(url,{
+                method:"DELETE"
+            });
+
+
+        const result =
+            await response.json();
+
+
+        if(!response.ok){
+
+            throw new Error(
+                result.message ||
+                "Delete failed"
+            );
+
+        }
+
+
+        alert("Delete successful");
+
+        await loadData();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            error.message ||
+            "Delete failed"
+        );
+
+    }
+
+}
+
+
+/* ==============================
+   CLOSE MODAL
+============================== */
+
+function closeModal(){
+
+    document
+        .getElementById("modal")
+        .classList
+        .remove("show");
+
+}
+
+
+/* ==============================
+   ESCAPE
+============================== */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function escapeAttr(value){
+
+    return escapeHTML(value);
+
+}
+
+
+/* ==============================
+   START
+============================== */
+
+loadData();
+
+</script>
+
+</body>
+</html>

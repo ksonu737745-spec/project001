@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RK Services Registration</title>
+
+<link rel="stylesheet" href="registration.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<div class="register-box">
+
+
+<div class="profile">
+
+<div class="profile-img">
+<i class="fa-solid fa-user-plus"></i>
+</div>
+
+<h2>RK Services</h2>
+
+<p>Create Your Account</p>
+
+</div>
+
+
+
+<form id="registerForm" action="/signup" method="post">
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-user"></i>
+
+<input type="text" placeholder="Full Name" required name="name">
+
+</div>
+
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-phone"></i>
+
+<input type="tel" placeholder="Mobile Number" required name="number">
+
+</div>
+
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-envelope"></i>
+
+<input type="email" placeholder="Email Address" required name="email">
+
+</div>
+
+
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input type="password" id="password" placeholder="Password" required name="password1">
+
+<i class="fa-solid fa-eye eye" id="eye1"></i>
+
+</div>
+
+
+
+
+<div class="input-box">
+
+<i class="fa-solid fa-lock"></i>
+
+<input type="password" id="confirmPassword" placeholder="Confirm Password" required name="password2">
+
+<i class="fa-solid fa-eye eye" id="eye2"></i>
+
+</div>
+
+
+
+
+<button type="submit">
+
+Register
+</button>
+
+<br>
+</form>
+<br>
+<div class="center">
+<a href="login.html" class="change">Login
+</a>
+</div>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+// Password Show Hide
+
+function passwordToggle(input,eye){
+
+
+eye.onclick=function(){
+
+
+if(input.type==="password"){
+
+
+input.type="text";
+
+eye.classList.remove("fa-eye");
+
+eye.classList.add("fa-eye-slash");
+
+
+}else{
+
+
+input.type="password";
+
+eye.classList.remove("fa-eye-slash");
+
+eye.classList.add("fa-eye");
+
+
+}
+
+
+}
+
+
+}
+
+
+
+passwordToggle(
+document.getElementById("password"),
+document.getElementById("eye1")
+);
+
+
+
+passwordToggle(
+document.getElementById("confirmPassword"),
+document.getElementById("eye2")
+);
+
+
+
+
+// Mobile keyboard scroll fix
+
+document.querySelectorAll("input").forEach(function(input){
+
+
+input.addEventListener("focus",function(){
+
+
+setTimeout(function(){
+
+
+input.scrollIntoView({
+
+behavior:"smooth",
+
+block:"center"
+
+});
+
+
+},300);
+
+
+});
+
+
+});
+
+
+
+document.getElementById("registerForm")
+.addEventListener("submit", function(e){
+
+    const name = document.querySelector('input[name="name"]').value.trim();
+    const number = document.querySelector('input[name="number"]').value.trim();
+    const email = document.querySelector('input[name="email"]').value.trim();
+    const password1 = document.querySelector('input[name="password1"]').value;
+    const password2 = document.querySelector('input[name="password2"]').value;
+
+
+    if(name === ""){
+        e.preventDefault();
+        alert("Please enter your name");
+        return;
+    }
+
+
+    if(!/^[0-9]{10}$/.test(number)){
+        e.preventDefault();
+        alert("Enter valid 10 digit mobile number");
+        return;
+    }
+
+
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        e.preventDefault();
+        alert("Enter valid email");
+        return;
+    }
+
+
+    if(password1.length < 6){
+        e.preventDefault();
+        alert("Password must be at least 6 characters");
+        return;
+    }
+
+
+    if(password1 !== password2){
+        e.preventDefault();
+        alert("Password and Confirm Password do not match");
+        return;
+    }
+
+});
+
+
+</script>

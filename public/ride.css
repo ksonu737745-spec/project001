@@ -1,0 +1,374 @@
+/*==========================
+RESET
+==========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f5f7fb;
+    color:#222;
+}
+
+/*==========================
+NAVBAR
+==========================*/
+
+nav{
+    position:sticky;
+    top:0;
+    width:100%;
+    height:70px;
+    background:#2563eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px;
+    color:#fff;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    z-index:1000;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.back{
+    color:#fff;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.back i{
+    margin-right:5px;
+}
+
+/*==========================
+HERO
+==========================*/
+
+.hero{
+    margin:20px;
+    padding:45px 25px;
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    border-radius:20px;
+    color:#fff;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(37,99,235,.25);
+}
+
+.hero h1{
+    font-size:35px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+/*==========================
+BOOKING
+==========================*/
+
+.booking{
+    padding:20px;
+}
+
+.booking h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#2563eb;
+}
+
+.booking-box{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.input-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:0 15px;
+}
+
+.input-box i{
+    color:#2563eb;
+    font-size:18px;
+}
+
+.input-box input,
+.input-box select{
+    width:100%;
+    padding:16px 10px;
+    border:none;
+    outline:none;
+    background:transparent;
+    font-size:16px;
+}
+
+.ride-btn{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.ride-btn:hover{
+    background:#1d4ed8;
+}
+
+/*==========================
+RIDE CARDS
+==========================*/
+
+.ride-service{
+    padding:20px;
+}
+
+.ride-service h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#2563eb;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card i{
+    font-size:48px;
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+.card h3{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#666;
+}
+
+/*==========================
+PARTNER
+==========================*/
+
+.partner{
+    margin:25px 20px;
+    padding:35px 25px;
+    background:#fff;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.partner h2{
+    color:#2563eb;
+    font-size:30px;
+    margin-bottom:15px;
+}
+
+.partner p{
+    color:#555;
+    font-size:17px;
+    line-height:28px;
+    margin-bottom:25px;
+}
+
+.partner button{
+    padding:15px 35px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.partner button:hover{
+    background:#1d4ed8;
+    transform:translateY(-3px);
+}
+
+/*==========================
+IMPORTANT NOTE
+==========================*/
+
+.note{
+    margin:25px 20px;
+    padding:30px;
+    background:#fff;
+    border-left:6px solid #2563eb;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.note h2{
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+.note p{
+    color:#555;
+    line-height:28px;
+}
+
+/*==========================
+CONTACT
+==========================*/
+
+.contact{
+    margin:25px 20px;
+    padding:35px 25px;
+    background:#fff;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.contact h2{
+    color:#2563eb;
+    margin-bottom:15px;
+}
+
+.contact p{
+    margin:10px 0;
+    font-size:17px;
+    color:#444;
+    word-break:break-word;
+}
+
+/*==========================
+FOOTER
+==========================*/
+
+footer{
+    margin-top:30px;
+    background:#111827;
+    color:#fff;
+    text-align:center;
+    padding:20px;
+}
+
+/*==========================
+RESPONSIVE
+==========================*/
+
+@media(max-width:768px){
+
+.hero{
+    margin:15px;
+    padding:35px 20px;
+}
+
+.hero h1{
+    font-size:28px;
+}
+
+.hero p{
+    font-size:16px;
+}
+
+.booking{
+    padding:15px;
+}
+
+.booking-box{
+    padding:20px;
+}
+
+.input-box input,
+.input-box select{
+    font-size:15px;
+}
+
+.cards{
+    grid-template-columns:1fr;
+}
+
+.card{
+    padding:22px;
+}
+
+.partner{
+    margin:15px;
+    padding:25px 18px;
+}
+
+.partner h2{
+    font-size:24px;
+}
+
+.partner p{
+    font-size:15px;
+}
+
+.partner button{
+    width:100%;
+}
+
+.note{
+    margin:15px;
+    padding:20px;
+}
+
+.note p{
+    font-size:15px;
+}
+
+.contact{
+    margin:15px;
+    padding:25px 18px;
+}
+
+.contact h2{
+    font-size:24px;
+}
+
+.contact p{
+    font-size:15px;
+}
+
+.logo{
+    font-size:20px;
+}
+
+.back{
+    font-size:15px;
+}
+
+}

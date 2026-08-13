@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmation</title>
+
+<link rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+/* ===========================
+   ORDER SECTION
+=========================== */
+
+.order-section{
+    padding:90px 20px 40px;
+}
+
+.order-card{
+
+    max-width:700px;
+    margin:auto;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    border-left:8px solid #2563eb;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    overflow:hidden;
+
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.card-header{
+
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+    color:#fff;
+
+    padding:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.card-header i{
+
+    width:65px;
+    height:65px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.18);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+}
+
+.card-header h2{
+
+    margin-bottom:5px;
+    font-size:26px;
+
+}
+
+.card-header p{
+
+    opacity:.9;
+    font-size:15px;
+
+}
+
+/* ===========================
+   DETAILS
+=========================== */
+
+.details{
+
+    padding:15px 22px;
+
+}
+
+.item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.item:last-child{
+
+    border-bottom:none;
+
+}
+
+.item span:first-child{
+
+    color:#6b7280;
+
+    font-weight:600;
+
+}
+
+.item span:last-child{
+
+    color:#111827;
+
+    font-weight:bold;
+
+}
+
+.status{
+
+    background:#fef3c7;
+
+    color:#b45309 !important;
+
+    padding:7px 15px;
+
+    border-radius:25px;
+
+    font-size:14px;
+
+}
+
+/* ===========================
+   NOTICE
+=========================== */
+
+.notice{
+
+    margin:22px;
+
+    padding:18px;
+
+    border-radius:15px;
+
+    background:#eef5ff;
+
+    border-left:6px solid #2563eb;
+
+}
+
+.notice-top{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:15px;
+
+}
+
+.notice-top i{
+
+    color:#2563eb;
+
+    font-size:24px;
+
+}
+
+.notice-top h3{
+
+    color:#2563eb;
+
+}
+
+.notice p{
+
+    line-height:28px;
+
+    color:#555;
+
+    margin-bottom:12px;
+
+}
+
+.warning{
+
+    background:#fff8e1;
+
+    border-left:4px solid orange;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    color:#8a6d3b !important;
+
+}
+
+/* ===========================
+   CHECKBOX
+=========================== */
+
+.agree-box{
+
+    margin:0 22px;
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:12px;
+
+}
+
+.agree-box input{
+
+    margin-top:5px;
+
+    transform:scale(1.25);
+
+    cursor:pointer;
+
+}
+
+.agree-box label{
+
+    line-height:26px;
+
+    color:#444;
+
+    font-size:15px;
+
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+
+#confirmBtn{
+
+    width:calc(100% - 44px);
+
+    margin:22px;
+
+    height:55px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:#fff;
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:not-allowed;
+
+    opacity:.45;
+
+    transition:.3s;
+
+}
+
+#confirmBtn.active{
+
+    opacity:1;
+
+    cursor:pointer;
+
+}
+
+#confirmBtn.active:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.card-header{
+
+    padding:20px;
+
+}
+
+.card-header h2{
+
+    font-size:22px;
+
+}
+
+.card-header i{
+
+    width:55px;
+
+    height:55px;
+
+    font-size:24px;
+
+}
+
+.item{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+}
+
+.notice{
+
+    margin:18px;
+
+}
+
+.agree-box{
+
+    margin:0 18px;
+
+}
+
+#confirmBtn{
+
+    width:calc(100% - 36px);
+
+    margin:18px;
+
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<section class="order-section">
+
+    <div class="order-card">
+
+        <div class="card-header">
+            <i class="fa-solid fa-receipt"></i>
+            <div>
+                <h2>Order Details</h2>
+                <p>Please verify your order information.</p>
+            </div>
+        </div>
+
+        <div class="details">
+
+            <div class="item">
+                <span>Order Status</span>
+                <span class="status">Pending</span>
+            </div>
+
+            <div class="item">
+                <span>Custom Web App</span>
+                <span id="serviceName">Enterprise</span>
+            </div>
+
+            <div class="item">
+                <span>Service Duration</span>
+                <span id="duration">10-12 Days</span>
+            </div>
+
+            <div class="item">
+                <span>Price</span>
+                <span id="price">From ₹50,000</span>
+            </div>
+
+            <div class="item">
+                <span>Advance Payment</span>
+                <span id="advance">₹15000</span>
+            </div>
+
+        </div>
+
+        <div class="notice">
+
+            <div class="notice-top">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <h3>Important Notice</h3>
+            </div>
+
+            <p>
+                To confirm your order and start work on your project,
+                you must pay at least
+                <strong>30% of the total service amount</strong>
+                as an advance payment.
+            </p>
+
+            <p>
+                After receiving the advance payment,
+                your order will be marked as
+                <strong>Confirmed</strong>
+                and our team will immediately begin working on your project.
+            </p>
+
+            <p class="warning">
+                If the required advance payment is not received,
+                your order will remain pending and no work will be started.
+            </p>
+
+        </div>
+
+        <div class="agree-box">
+
+            <input
+            type="checkbox"
+            id="agree">
+
+            <label for="agree">
+
+                I have read all the above details and understand that
+                paying at least 30% advance is required to confirm my order.
+
+            </label>
+
+        </div>
+
+        <button
+        id="confirmBtn"
+        disabled onclick="buy('P005')">
+
+            Confirm Order
+
+        </button>
+
+    </div>
+
+</section>
+
+<script>
+
+// ===========================
+// ORDER CONFIRM
+// ===========================
+
+const agree = document.getElementById("agree");
+const confirmBtn = document.getElementById("confirmBtn");
+
+agree.addEventListener("change", function () {
+
+    if (this.checked) {
+
+        confirmBtn.disabled = false;
+        confirmBtn.classList.add("active");
+
+    } else {
+
+        confirmBtn.disabled = true;
+        confirmBtn.classList.remove("active");
+
+    }
+
+});
+
+
+function buy(productId) {
+    fetch("/order", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            productId: productId
+        })
+    });
+}
+
+// ===========================
+// CONFIRM BUTTON
+// ===========================
+
+confirmBtn.addEventListener("click", function () {
+
+    if (!agree.checked) {
+        alert("Please read the notice and accept the terms first.");
+        return;
+    }
+
+    alert("Your order has been confirmed successfully.");
+
+    // Example:
+    // window.location.href = "/payment";
+
+    // OR
+    // fetch("/confirmorder",{
+    //     method:"POST"
+    // });
+
+});
+</script>
+
+</body>
+</html>
