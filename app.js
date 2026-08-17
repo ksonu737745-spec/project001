@@ -18,10 +18,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: "sonu",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false
+    }
 }));
-
-
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
