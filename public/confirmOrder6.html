@@ -401,8 +401,31 @@ function buy(productId) {
             productId: productId
         })
     });
-}
+};
 
+
+// ===========================
+// CONFIRM BUTTON
+// ===========================
+
+confirmBtn.addEventListener("click", function () {
+
+    if (!agree.checked) {
+        alert("Please read the notice and accept the terms first.");
+        return;
+    }
+
+    alert("Your order has been confirmed successfully.");
+
+    // Example:
+    window.location.href = "payment6.html";
+
+    // OR
+    // fetch("/confirmorder",{
+    //     method:"POST"
+    // });
+
+});
 
 </script>
 
