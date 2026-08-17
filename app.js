@@ -803,7 +803,9 @@ app.post("/login", async (req, res) => {
 
     // Login Session
     req.session.userId = user._id;
+
     req.session.email = user.email;
+req.session.loggedIn = true;
 
     // Dashboard
     res.redirect("/dashboard");
