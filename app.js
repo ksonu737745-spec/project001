@@ -1699,128 +1699,15 @@ body {
 /* ==========================================
    LOGOUT
 ========================================== */
+app.get("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.send("Logout failed");
+        }
 
-app.get("/logout", checkLogin, async (req, res) => {
-
-    req.session.destroy();
-
-    res.send(`
-
-<!DOCTYPE html>
-
-<html lang="en">
-
-<head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>Logout</title>
-
-<style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
-body {
-
-    min-height: 100vh;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    background: #f3f4f6;
-
-    font-family: Arial, sans-serif;
-}
-
-
-.box {
-
-    background: white;
-
-    padding: 25px;
-
-    width: 90%;
-
-    max-width: 330px;
-
-    text-align: center;
-
-    border-radius: 14px;
-
-    box-shadow:
-        0 5px 20px
-        rgba(0,0,0,.1);
-}
-
-
-h2 {
-
-    margin-bottom: 18px;
-
-    color: #222;
-}
-
-
-button {
-
-    width: 100%;
-
-    padding: 11px;
-
-    border: 0;
-
-    border-radius: 8px;
-
-    background: #222;
-
-    color: white;
-
-    font-size: 14px;
-
-    cursor: pointer;
-}
-
-</style>
-
-</head>
-
-
-<body>
-
-<div class="box">
-
-    <h2>
-        Logout Successful
-    </h2>
-
-    <button
-        onclick="history.back(); setTimeout(() => location.reload(), 500)">
-        Back
-    </button>
-
-</div>
-
-</body>
-
-</html>
-
-    `);
-
+        res.sendFile(path.join(__dirname, "public", "index.html"));
+    });
 });
-
-
-
 
 // ------------------- START SERVER -------------------
 
