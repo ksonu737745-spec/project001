@@ -1702,15 +1702,22 @@ body {
    LOGOUT
 ========================================== */
 
-app.get("/logout", checkLogin, async (req, res) => {
-req.session.destroy();
-if(req.session.loggedIn = false){
-return res.sendFile(path.join(__dirname, "public", "index.html"));
+app.get("/logout", (req, res) => {
 
-};
+    req.session.destroy((err) => {
+
+        if (err) {
+            console.error("Logout error:", err);
+            return res.status(500).send("Logout failed");
+        }
+
+        res.sendFile(
+            path.join(__dirname, "public", "index.html")
+        );
+
+    });
+
 });
-
-
 
 
 // ------------------- START SERVER -------------------
