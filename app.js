@@ -807,7 +807,9 @@ app.post("/login", async (req, res) => {
     req.session.email = user.email;
 req.session.loggedIn = true;
 
-    // Dashboard
+    
+//try
+// Dashboard
     res.redirect("/dashboard");
 
 });
@@ -1699,15 +1701,17 @@ body {
 /* ==========================================
    LOGOUT
 ========================================== */
-app.get("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.send("Logout failed");
-        }
 
-        res.sendFile(path.join(__dirname, "public", "index.html"));
-    });
+app.get("/logout", checkLogin, async (req, res) => {
+req.session.destroy();
+if(req.session.loggedIn = false){
+return res.sendFile(path.join(__dirname, "public", "index.html"));
+
+};
 });
+
+
+
 
 // ------------------- START SERVER -------------------
 
