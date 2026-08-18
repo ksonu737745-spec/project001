@@ -1,36 +1,28 @@
-const CACHE_NAME = "rk-services-v2";
+const CACHE_NAME = "rk-services-v3";
 
 self.addEventListener("install", event => {
-
     event.waitUntil(
         caches.open(CACHE_NAME)
     );
 
     self.skipWaiting();
-
 });
 
 
 self.addEventListener("activate", event => {
-
     event.waitUntil(
         caches.keys().then(keys => {
-
             return Promise.all(
                 keys.map(key => {
-
                     if (key !== CACHE_NAME) {
                         return caches.delete(key);
                     }
-
                 })
             );
-
         }).then(() => {
             return self.clients.claim();
         })
     );
-
 });
 
 
@@ -46,36 +38,28 @@ self.addEventListener("fetch", event => {
             .then(response => {
 
                 if (response.ok) {
-
-                    const responseClone = response.clone();
+                    const clone = response.clone();
 
                     caches.open(CACHE_NAME)
                         .then(cache => {
-
-                            cache.put(
-                                event.request,
-                                responseClone
-                            );
-
+                            cache.put(event.request, clone);
                         });
-
                 }
 
                 return response;
-
             })
 
             .catch(() => {
 
                 return caches.match(event.request)
-                    .then(cachedResponse => {
+                    .then(cached => {
 
-                        if (cachedResponse) {
-                            return cachedResponse;
+                        if (cached) {
+                            return cached;
                         }
 
                         return new Response(
-                            "Offline - This page was not saved yet.",
+                            "Page not available offline.",
                             {
                                 status: 503,
                                 headers: {
@@ -83,11 +67,7 @@ self.addEventListener("fetch", event => {
                                 }
                             }
                         );
-
                     });
-
             })
-
     );
-
 });
