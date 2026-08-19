@@ -562,7 +562,15 @@ const PORT = process.env.PORT || 5000;
 
 
 app.get("/", (req, res) => {
-    res.send("Hello Express!");
+    if (req.session.userId) {
+        return res.sendFile(
+            path.join(__dirname, "public", "dashboard.html")
+        );
+    }
+
+    return res.sendFile(
+        path.join(__dirname, "public", "index.html")
+    );
 });
 
 
