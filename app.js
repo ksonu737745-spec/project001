@@ -564,7 +564,7 @@ const PORT = process.env.PORT || 5000;
 app.get("/", (req, res) => {
     if (req.session.userId) {
         return res.sendFile(
-            path.join(__dirname, "public", "dashboard.html")
+            path.join(__dirname, "public", "dashbord.html")
         );
     }
 
